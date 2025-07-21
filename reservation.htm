@@ -1,286 +1,288 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-    <title>ระบบจองเครื่องมือออนไลน์ ห้องปฏิบัติการวิศวกรรมพอลิเมอร์</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจองเครื่องมือออนไลน์ | ห้องปฏิบัติการวิศวกรรมพอลิเมอร์</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        body {
+            font-family: 'Kanit', sans-serif;
+            /* New background color and image */
+            background-color: #110f1c;
+            color: #e2e8f0;
+            background-image:
+                linear-gradient(rgba(17, 15, 28, 0.96), rgba(17, 15, 28, 0.96)),
+                url('https://www.transparenttextures.com/patterns/galaxy.png');
+            background-attachment: fixed;
+        }
+        
+        .text-glow {
+            /* New glow color - violet/fuchsia */
+            text-shadow: 0 0 8px rgba(192, 132, 252, 0.8), 0 0 20px rgba(217, 70, 239, 0.5);
         }
 
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        a {
-            color: #0645AD;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .header {
-            background-color: #f2f2f2;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .link-animation {
+        .futuristic-card {
             position: relative;
+            /* New card background color */
+            background: rgba(40, 35, 61, 0.7); 
+            backdrop-filter: blur(10px);
+            /* New border color */
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .link-animation::after {
-            content: "👆";
-            display: inline-block;
-            animation: rotate 2s infinite linear;
+        .futuristic-card:hover {
+            transform: translateY(-4px);
+            /* New hover border and shadow color */
+            border-color: rgba(192, 132, 252, 0.6);
+            box-shadow: 0 0 25px rgba(192, 132, 252, 0.25);
         }
 
-        @keyframes rotate {
-            0% {
-                transform: rotate(0);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+        .modal-iframe {
+            width: 100%;
+            height: 85vh;
+        }
+        
+        .modal-futuristic {
+             /* New modal background and border */
+             background: rgba(17, 15, 28, 0.9);
+             backdrop-filter: blur(12px);
+             border: 1px solid rgba(192, 132, 252, 0.5);
+             box-shadow: 0 0 50px rgba(192, 132, 252, 0.2);
+        }
+
+        #calendar-modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            /* New section title color and border */
+            color: #c084fc; /* violet-400 */
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(192, 132, 252, 0.3);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 6px rgba(192, 132, 252, 0.5);
         }
     </style>
 </head>
-<body>
-    <div class="header">
-        <h1>ระบบจองเครื่องมือออนไลน์ ห้องปฏิบัติการวิศวกรรมพอลิเมอร์</h1>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfbf7jVBAitOtlUjGQQrXIOqpL_tKIqq717zvO6RVr04qMUoQ/viewform" target="_blank">
-            <span class="link-animation">จองเครื่องคลิกที่นี่</span>
-        </a>
+<body class="text-slate-200">
+
+    <header class="p-6 text-center">
+        <!-- Changed text color to violet-400 -->
+        <h1 class="text-3xl md:text-5xl font-bold text-violet-400 text-glow mb-2">ระบบจองเครื่องมือออนไลน์</h1>
+        <p class="text-lg text-slate-400">ห้องปฏิบัติการวิศวกรรมพอลิเมอร์</p>
+    </header>
+
+    <main class="px-4 md:px-8 pb-8">
+        <!-- Changed colors for search and button -->
+        <div class="sticky top-0 z-20 bg-[#110f1c]/80 backdrop-blur-lg py-4 mb-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
+             <div class="relative w-full max-w-lg">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-violet-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="search-input" placeholder="ค้นหาด้วยชื่อเครื่องมือ..." class="w-full bg-slate-800/80 border border-violet-500/30 rounded-full py-3 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 placeholder-slate-500">
+            </div>
+             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfbf7jVBAitOtlUjGQQrXIOqpL_tKIqq717zvO6RVr04qMUoQ/viewform" target="_blank" class="w-full sm:w-auto inline-block bg-violet-600 hover:bg-violet-500 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg shadow-violet-500/20 text-center">
+                จองเครื่องมือ
+            </a>
+        </div>
+
+        <div id="equipment-sections" class="space-y-10">
+            <!-- Machine sections and cards will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Changed modal colors -->
+    <div id="calendar-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 hidden opacity-0">
+        <div class="modal-futuristic rounded-xl w-full max-w-6xl h-full max-h-[95vh] flex flex-col overflow-hidden">
+            <div class="flex justify-between items-center p-4 border-b border-violet-500/30">
+                <h2 id="modal-title" class="text-xl font-semibold text-violet-300 text-glow">ตารางการจอง</h2>
+                <button id="close-modal" class="text-violet-400 hover:text-white text-4xl transition-colors">&times;</button>
+            </div>
+            <div class="flex-grow p-2">
+                 <iframe id="modal-iframe" class="modal-iframe border-0 rounded-lg bg-white" src="about:blank"></iframe>
+            </div>
+        </div>
     </div>
-    <table>
-        <tr>
-            <th>เครื่องที่</th>
-            <th>ชื่อเครื่อง</th>
-            <th>ตารางการจองเครื่อง</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>3D printing [No.01]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=008ecc229aee377505f56ac96bc70d946d465d7311842f74aec6b358167b19cf%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>3D printing [No.02]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=beff27327ae4fd792ac960f6fedcac8cb43f5948fd4c19bf6e54b01598413789%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>3D printing [No.03]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=5b80e6e5c678bdd709bc035a84daf8c6b92a951a825442db33627711f7081e2d%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <!-- เพิ่มเครื่องเรื่อย ๆ ตามลำดับ -->
-        <tr>
-            <td>4</td>
-            <td>3D printing [No.04]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=5a84e062752f7c49f245619c82a3376464f39c40f5236096187456b23f513ead%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>3D printing [No.05]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=2336f770af947ab344998248680433490727a3d6ffd1e50b92f13a036c857b1d%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td>Blow film [CT]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=dd5e50b72cf4b92bf87801f03164dc507c7ca4ed72258b88c61e8eea43fc57b4%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td>Blow film [SEMCO]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=102ca83fee744bc37c79600e28730dfeb80ffc2c69532b35847d2c918fad2946%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>8</td>
-            <td>Blow mold [SMC]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=e96640368caf16ce5dba8420d8458bcb4e3ee2fdabe6fed477c14ef8ea89ef42%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>9</td>
-            <td>BIO 3DPRINTING</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=abc70e05f339a24354131aa9a7a6dc7b17d9f6bd91bd21d00247d1dedc58d02f%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td>Co-injection molding machine [TEDERIC]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=91d064655a5a231fea2a28570b60cb94b84aab2b69492b91555706657c7ef275%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-    <td>11</td>
-    <td>Compression molding [CT]</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=30bb03ce3617fcb5335a18a3802a7243dfe937dea3773592766887b3df7907de%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
-        <tr>
-    <td>12</td>
-    <td>Compression molding [Gotect]</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=9c997b22750124e059b2cc5ea33995e3ff2f83f2fefc8e813755659424692e4f%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
+
+    <script>
+        const categories = [
+            { id: '3d-printing', title: 'เครื่องพิมพ์ 3 มิติ (3D Printing)' },
+            { id: 'molding-forming', title: 'เครื่องขึ้นรูปและแปรรูป (Molding & Forming)' },
+            { id: 'mixing-processing', title: 'เครื่องผสมและเตรียมพอลิเมอร์ (Mixing & Processing)' },
+            { id: 'testing-analysis', title: 'เครื่องทดสอบและวิเคราะห์สมบัติ (Testing & Analysis)' },
+            { id: 'general-equipment', title: 'อุปกรณ์ทั่วไป (General Equipment)' },
+        ];
+
+        const machines = [
+            { no: 1, name: '3D printing [No.01]', category: '3d-printing', url: 'https://calendar.google.com/calendar/embed?src=008ecc229aee377505f56ac96bc70d946d465d7311842f74aec6b358167b19cf%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 2, name: '3D printing [No.02]', category: '3d-printing', url: 'https://calendar.google.com/calendar/embed?src=beff27327ae4fd792ac960f6fedcac8cb43f5948fd4c19bf6e54b01598413789%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 3, name: '3D printing [No.03]', category: '3d-printing', url: 'https://calendar.google.com/calendar/embed?src=5b80e6e5c678bdd709bc035a84daf8c6b92a951a825442db33627711f7081e2d%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 4, name: '3D printing [No.04]', category: '3d-printing', url: 'https://calendar.google.com/calendar/embed?src=5a84e062752f7c49f245619c82a3376464f39c40f5236096187456b23f513ead%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 5, name: '3D printing [No.05]', category: '3d-printing', url: 'https://calendar.google.com/calendar/embed?src=2336f770af947ab344998248680433490727a3d6ffd1e50b92f13a036c857b1d%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 9, name: 'BIO 3DPRINTING', category: '3d-printing', url: 'https://calendar.google.com/calendar/embed?src=abc70e05f339a24354131aa9a7a6dc7b17d9f6bd91bd21d00247d1dedc58d02f%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            
+            { no: 6, name: 'Blow film [CT]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=dd5e50b72cf4b92bf87801f03164dc507c7ca4ed72258b88c61e8eea43fc57b4%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 7, name: 'Blow film [SEMCO]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=102ca83fee744bc37c79600e28730dfeb80ffc2c69532b35847d2c918fad2946%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 8, name: 'Blow mold [SMC]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=e96640368caf16ce5dba8420d8458bcb4e3ee2fdabe6fed477c14ef8ea89ef42%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 10, name: 'Co-injection molding machine [TEDERIC]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=91d064655a5a231fea2a28570b60cb94b84aab2b69492b91555706657c7ef275%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 11, name: 'Compression molding [CT]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=30bb03ce3617fcb5335a18a3802a7243dfe937dea3773592766887b3df7907de%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 12, name: 'Compression molding [Gotect]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=9c997b22750124e059b2cc5ea33995e3ff2f83f2fefc8e813755659424692e4f%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 13, name: 'Compression molding [LAB-Tech]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=78d7797785ab786eca2d79e3d098220e27049dbe5a0de33b8b844b61ddb1431b%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 14, name: 'Compression molding [Promech]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=5ee706d4be42fb4ac866cec5e8c378b3de0bfea058c163f153f19f33cea8f778%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 25, name: 'Injection molding machine [CLF]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=ed057f89b9f4c3dc2c6a7a050b43ec91a5baa04c9077e5b4cc42fe4adbb38648%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 28, name: 'Rubber Extrusion machine [YFM]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=ace114f328312ffbeed3826d1f367a118c887e4c49dd2b0adee156cbccf78722%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 29, name: 'Rubber Injection machine [YFM]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=afb29351eec11df9e2e326616f68b5b66740940b7c0df4ea5b5d9979ef1a1d7f%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 33, name: 'Single screw [BETOL]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=5c20476bc20980634806944d1ccb440fff7e8527e0ce6a57fcb44cd237cda90a%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 35, name: 'Thermoform [Enmech]', category: 'molding-forming', url: 'https://calendar.google.com/calendar/embed?src=832fbe868dc22bbc40878cb4a5194a195463568fbb3622ba96febdd33208c58e%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 36, name: 'Twin screw [Barbender]', category: 'mixing-processing', url: 'https://calendar.google.com/calendar/embed?src=871c2d0a145a653f1ae103c034d6ea9c35ceb92b78edfd62eff35d7a0bbfa9fc%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 37, name: 'Twin screw [CT]', category: 'mixing-processing', url: 'https://calendar.google.com/calendar/embed?src=15778948f0bd78e36f210fb6a6177ac05357a1bb34313893973be1536ee9bdfc%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 24, name: 'Internal mixer [Hakke-01]', category: 'mixing-processing', url: 'https://calendar.google.com/calendar/embed?src=a8d14bbbde109c363c637347bf8b4a00e350ecd827ef046333035aec0fd2a413%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 30, name: 'Rubber Internal mixer [CT]', category: 'mixing-processing', url: 'https://calendar.google.com/calendar/embed?src=2def8fe8ba1dfe811cbc8879e1aad56190b5c811682a4233455f9540c748e654%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 32, name: 'Rubber Kneader', category: 'mixing-processing', url: 'https://calendar.google.com/calendar/embed?src=912a48d74b6829521e44808ec2d1564487abb67747c9f15554af11224a4e4a2c%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 38, name: 'Two roll mill [CC]', category: 'mixing-processing', url: 'https://calendar.google.com/calendar/embed?src=f8bad4a4cc00318ae5eeb9c58fdc30b47f0438ac36fa0ed6df33d58241793b6e%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 39, name: 'Two roll mill [YFM]', category: 'mixing-processing', url: 'https://calendar.google.com/calendar/embed?src=e0b1236f9a1580796030c726a966287cae46806969f6a45894b4de51831f260f%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            
+            { no: 15, name: 'DMA', category: 'testing-analysis', url: 'https://calendar.google.com/calendar/embed?src=78480a28429b7fa9ac6984c44576f6ec41335aaf53c3d471cf1d772d942e0ad7%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 16, name: 'DSC', category: 'testing-analysis', url: 'https://calendar.google.com/calendar/embed?src=6557640d5028dbf1223ea7418d2a679f83818b9550fa1ca5a44b145d5b8d640d%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 18, name: 'HDT [Atlas]', category: 'testing-analysis', url: 'https://calendar.google.com/calendar/embed?src=0e31c24abb36f487bf081a613f43a735c88086ef131d89f712de6276cd5d86b0%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 23, name: 'Impactor [INSTORN]', category: 'testing-analysis', url: 'https://calendar.google.com/calendar/embed?src=9eebba9a178b85233722e1efa9639a89d2746c407642b52d2100c0c348f8d8aa%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 26, name: 'MDR3000 [Montech]', category: 'testing-analysis', url: 'https://calendar.google.com/calendar/embed?src=a4050e91c8f9945cc06732090fd81121c3e8d11a487d85bf25f85516a986ad7e%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 27, name: 'Mooney viscometer [MonTech]', category: 'testing-analysis', url: 'https://calendar.google.com/calendar/embed?src=98ecd55d006f1f8b4f308cbe6e76aeb01c59ed5ca57da225533baa43503f31ea%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 31, name: 'Rheometer [GOTTFERT]', category: 'testing-analysis', url: 'https://calendar.google.com/calendar/embed?src=35b8a01f52c0f019fb2494667c6ac5b52c62a4dc1687d86f29914ec590ee59fe%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 34, name: 'TGA', category: 'testing-analysis', url: 'https://calendar.google.com/calendar/embed?src=a467b4bceb3dfd8c0e568e5183d84d88662264d9a197ad62e528d0c962de1ed5%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 40, name: 'Universal Testing Machine [UTM]', category: 'testing-analysis', url: 'https://calendar.google.com/calendar/embed?src=4745ea0c97f287a6d30904ca51f1f7582f07ce5738c778a7c6ffb18f204663eb%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            
+            { no: 17, name: 'Hi-Speed Centrifuge [Avanti]', category: 'general-equipment', url: 'https://calendar.google.com/calendar/embed?src=53e863769726dfb6058d9e0727f55ae979634c1d4ff56650b98c81644aba95d5%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 19, name: 'Hot air oven [Despatch]', category: 'general-equipment', url: 'https://calendar.google.com/calendar/embed?src=3da5232f76dde1e42040d2682a3d9aa40ca07d30d0e3c1498dc7369149d5baa3%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 20, name: 'Hot air oven [Memmert] No.1', category: 'general-equipment', url: 'https://calendar.google.com/calendar/embed?src=b2046e95e6d4df229a12c2e80f738cb403edccf5e612ed939e2038b762437bba%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 21, name: 'Hot air oven [Memmert] No.2', category: 'general-equipment', url: 'https://calendar.google.com/calendar/embed?src=5c11367fe7707aa0a91c6ce3d16dc4ade8e121301baa20a9dc31f7da7001629e%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+            { no: 22, name: 'Hot air oven [Memmert] No.3', category: 'general-equipment', url: 'https://calendar.google.com/calendar/embed?src=0d61b40b2bbf04a618c1c3a1fc5704758e30c400489b21e134b4077467dc1f09%40group.calendar.google.com&ctz=Asia%2FBangkok' },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sectionsContainer = document.getElementById('equipment-sections');
+            const modal = document.getElementById('calendar-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalIframe = document.getElementById('modal-iframe');
+            const closeModalBtn = document.getElementById('close-modal');
+            const searchInput = document.getElementById('search-input');
+
+            // --- Function to generate cards ---
+            const renderCards = () => {
+                sectionsContainer.innerHTML = ''; // Clear existing content
+                categories.forEach(category => {
+                    const machinesInCategory = machines.filter(m => m.category === category.id);
+                    if (machinesInCategory.length === 0) return;
+
+                    // Create section wrapper
+                    const sectionEl = document.createElement('section');
+                    sectionEl.id = `section-${category.id}`;
+                    
+                    // Create title
+                    const titleEl = document.createElement('h2');
+                    titleEl.className = 'section-title';
+                    titleEl.textContent = category.title;
+                    sectionEl.appendChild(titleEl);
+
+                    // Create grid for cards
+                    const gridEl = document.createElement('div');
+                    gridEl.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6';
+                    
+                    machinesInCategory.forEach(machine => {
+                        // Changed card colors
+                        const cardContainer = document.createElement('div');
+                        cardContainer.className = 'card-container';
+                        cardContainer.innerHTML = `
+                            <div class="futuristic-card rounded-lg flex flex-col h-full justify-between cursor-pointer p-4 view-calendar-btn"
+                                 data-url="${machine.url}" 
+                                 data-name="${machine.name}">
+                                <div>
+                                    <span class="text-sm font-bold text-violet-400/80">เครื่องที่ ${machine.no}</span>
+                                    <h3 class="text-md font-semibold mt-1 text-slate-100 h-14">${machine.name}</h3>
+                                </div>
+                                <div class="text-right text-violet-400 font-bold mt-2 hover:text-violet-300 transition-colors text-sm">
+                                    ดูตาราง &rarr;
+                                </div>
+                            </div>
+                        `;
+                        gridEl.appendChild(cardContainer);
+                    });
+                    
+                    sectionEl.appendChild(gridEl);
+                    sectionsContainer.appendChild(sectionEl);
+                });
+            }
+            
+            renderCards(); // Initial render
+
+            // --- Modal Functions ---
+            const openModal = (url, name) => {
+                modalTitle.textContent = `ตารางการจอง: ${name}`;
+                modalIframe.src = url;
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modalIframe.src = 'about:blank';
+                    document.body.style.overflow = '';
+                }, 300);
+            };
+            
+            // --- Search Functionality ---
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                
+                document.querySelectorAll('.card-container').forEach(cardContainer => {
+                    const card = cardContainer.querySelector('.futuristic-card');
+                    const machineName = card.dataset.name.toLowerCase();
+                    
+                    if (machineName.includes(searchTerm)) {
+                        cardContainer.style.display = 'block';
+                    } else {
+                        cardContainer.style.display = 'none';
+                    }
+                });
+
+                // Hide section titles if all cards within are hidden
+                document.querySelectorAll('#equipment-sections section').forEach(section => {
+                    const visibleCards = section.querySelectorAll('.card-container[style*="display: block"], .card-container:not([style*="display: none"])');
+                    if (visibleCards.length === 0) {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = 'block';
+                    }
+                });
+            });
 
 
-        <tr>
-            <td>13</td>
-            <td>Compression molding [LAB-Tech]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=78d7797785ab786eca2d79e3d098220e27049dbe5a0de33b8b844b61ddb1431b%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-    <td>14</td>
-    <td>Compression molding [Promech]</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=5ee706d4be42fb4ac866cec5e8c378b3de0bfea058c163f153f19f33cea8f778%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
-        <tr>
-    <td>15</td>
-    <td>DMA</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=78480a28429b7fa9ac6984c44576f6ec41335aaf53c3d471cf1d772d942e0ad7%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
-        <tr>
-            <td>16</td>
-            <td>DSC</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=6557640d5028dbf1223ea7418d2a679f83818b9550fa1ca5a44b145d5b8d640d%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>17</td>
-            <td>Hi-Speed Centrifuge [Avanti]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=53e863769726dfb6058d9e0727f55ae979634c1d4ff56650b98c81644aba95d5%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>18</td>
-            <td>HDT [Atlas]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=0e31c24abb36f487bf081a613f43a735c88086ef131d89f712de6276cd5d86b0%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>19</td>
-            <td>Hot air oven [Despatch]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=3da5232f76dde1e42040d2682a3d9aa40ca07d30d0e3c1498dc7369149d5baa3%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-    <td>20</td>
-    <td>Hot air oven [Memmert] No.1</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=b2046e95e6d4df229a12c2e80f738cb403edccf5e612ed939e2038b762437bba%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
-<tr>
-    <td>21</td>
-    <td>Hot air oven [Memmert] No.2</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=5c11367fe7707aa0a91c6ce3d16dc4ade8e121301baa20a9dc31f7da7001629e%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
-<tr>
-    <td>22</td>
-    <td>Hot air oven [Memmert] No.3</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=0d61b40b2bbf04a618c1c3a1fc5704758e30c400489b21e134b4077467dc1f09%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
-        <tr>
-            <td>23</td>
-            <td>Impactor [INSTORN]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=9eebba9a178b85233722e1efa9639a89d2746c407642b52d2100c0c348f8d8aa%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>24</td>
-            <td>Internal mixer [Hakke-01]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=a8d14bbbde109c363c637347bf8b4a00e350ecd827ef046333035aec0fd2a413%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>25</td>
-            <td>Injection molding machine [CLF]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=ed057f89b9f4c3dc2c6a7a050b43ec91a5baa04c9077e5b4cc42fe4adbb38648%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>26</td>
-            <td>MDR3000 [Montech]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=a4050e91c8f9945cc06732090fd81121c3e8d11a487d85bf25f85516a986ad7e%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>27</td>
-            <td>Mooney viscometer [MonTech]</></td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=98ecd55d006f1f8b4f308cbe6e76aeb01c59ed5ca57da225533baa43503f31ea%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>28</td>
-            <td>Rubber Extrusion machine [YFM]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=ace114f328312ffbeed3826d1f367a118c887e4c49dd2b0adee156cbccf78722%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>29</td>
-            <td>Rubber Injection machine [YFM]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=afb29351eec11df9e2e326616f68b5b66740940b7c0df4ea5b5d9979ef1a1d7f%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>30</td>
-            <td>Rubber Internal mixer [CT]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=2def8fe8ba1dfe811cbc8879e1aad56190b5c811682a4233455f9540c748e654%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>31</td>
-            <td>Rheometer [GOTTFERT]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=35b8a01f52c0f019fb2494667c6ac5b52c62a4dc1687d86f29914ec590ee59fe%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-                <tr>
-            <td>32</td>
-            <td>Rubber Kneader</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=912a48d74b6829521e44808ec2d1564487abb67747c9f15554af11224a4e4a2c%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-    <td>33</td>
-    <td>Single screw [BETOL]</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=5c20476bc20980634806944d1ccb440fff7e8527e0ce6a57fcb44cd237cda90a%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
-        <tr>
-    <td>34</td>
-    <td>TGA</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=a467b4bceb3dfd8c0e568e5183d84d88662264d9a197ad62e528d0c962de1ed5%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
-        <tr>
-    <td>33</td>
-    <td>Thermoform [Enmech]</td>
-    <td><a href="https://calendar.google.com/calendar/embed?src=832fbe868dc22bbc40878cb4a5194a195463568fbb3622ba96febdd33208c58e%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-</tr>
-        <tr>
-            <td>36</td>
-            <td>Twin screw [Barbender]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=871c2d0a145a653f1ae103c034d6ea9c35ceb92b78edfd62eff35d7a0bbfa9fc%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>37</td>
-            <td>Twin screw [CT]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=15778948f0bd78e36f210fb6a6177ac05357a1bb34313893973be1536ee9bdfc%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>38</td>
-            <td>Two roll mill [CC]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=f8bad4a4cc00318ae5eeb9c58fdc30b47f0438ac36fa0ed6df33d58241793b6e%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>39</td>
-            <td>Two roll mill [YFM]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=e0b1236f9a1580796030c726a966287cae46806969f6a45894b4de51831f260f%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
-        <tr>
-            <td>40</td>
-            <td>Universal Testing Machine [UTM]</td>
-            <td><a href="https://calendar.google.com/calendar/embed?src=4745ea0c97f287a6d30904ca51f1f7582f07ce5738c778a7c6ffb18f204663eb%40group.calendar.google.com&ctz=Asia%2FBangkok" target="_blank">คลิกที่นี่</a></td>
-        </tr>
+            // --- Event Listeners ---
+            sectionsContainer.addEventListener('click', (e) => {
+                const card = e.target.closest('.view-calendar-btn');
+                if (card) {
+                    const url = card.dataset.url;
+                    const name = card.dataset.name;
+                    openModal(url, name);
+                }
+            });
 
-
-
-
-
-
-
-    </table>
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape" && !modal.classList.contains('hidden')) closeModal();
+            });
+        });
+    </script>
 </body>
 </html>
